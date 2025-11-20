@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle réservation{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Créer une nouvelle réservation</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <div class="mt-3">
+            <button class="btn btn-success">Créer</button>
+            <a href="{{ path('app_reservation_index') }}" class="btn btn-secondary">Annuler</a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

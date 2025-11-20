@@ -1,0 +1,19 @@
+<?php
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel emprunt{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Créer un nouvel emprunt</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <div class="mt-3">
+                <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+                <a href="{{ path('app_emprunt_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

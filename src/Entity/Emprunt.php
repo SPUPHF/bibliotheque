@@ -21,7 +21,6 @@ class Emprunt
     #[ORM\JoinColumn(nullable: false)]
     private ?Exemplaire $exemplaire = null;
 
-
     // Date de début d'emprunt
     #[ORM\Column(type: "date")]
     private ?\DateTimeInterface $dateEmprunt = null;
@@ -30,8 +29,9 @@ class Emprunt
     #[ORM\Column(type: "date")]
     private ?\DateTimeInterface $dateRetourPrevu = null;
 
-    #[ORM\Column(type: "date")]
-    private ?\DateTimeInterface $dateDuRetour = null;
+    // Date de retour effective (nullable si non encore retourné)
+    #[ORM\Column(type: "date", nullable: true)]
+    private ?\DateTimeInterface $dateRetour = null;
 
     // Montant de pénalité si retard
     #[ORM\Column(type: "float", nullable: true)]
@@ -77,14 +77,37 @@ class Emprunt
         return $this;
     }
 
+    public function getDateRetourPrevu(): ?\DateTimeInterface
+    {
+        return $this->dateRetourPrevu;
+    }
+
+    public function setDateRetourPrevu(\DateTimeInterface $dateRetourPrevu): self
+    {
+        $this->dateRetourPrevu = $dateRetourPrevu;
+        return $this;
+    }
+
     public function getDateRetour(): ?\DateTimeInterface
     {
         return $this->dateRetour;
     }
 
-    public function setDateRetour(\DateTimeInterface $dateRetour): self
+    public function setDateRetour(?\DateTimeInterface $dateRetour): self
     {
         $this->dateRetour = $dateRetour;
+        return $this;
+    }
+
+    // ALIAS pour compatibilité avec dateDuRetour
+    public function getDateDuRetour(): ?\DateTimeInterface
+    {
+        return $this->dateRetour;
+    }
+
+    public function setDateDuRetour(?\DateTimeInterface $dateDuRetour): self
+    {
+        $this->dateRetour = $dateDuRetour;
         return $this;
     }
 

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des réservations{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Liste des réservations</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+
+        <a href="{{ path('app_reservation_new') }}" class="btn btn-success mb-3">Créer une nouvelle réservation</a>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Utilisateur</th>
+                <th>Ouvrage</th>
+                <th>Date de création</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.user ? reservation.user.email : '' }}</td>
+                    <td>{{ reservation.ouvrage ? reservation.ouvrage.titre : '' }}</td>
+                    <td>{{ reservation.dateCreation ? reservation.dateCreation|date('d/m/Y H:i') : '' }}</td>
+                    <td>
+                        {% if reservation.active %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Aucune réservation trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

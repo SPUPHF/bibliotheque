@@ -29,8 +29,9 @@ security:
   # Contrôle d’accès selon les rôles
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: ^/emprunt, roles: ROLE_LIBRARIAN }
-    - { path: ^/reservation, roles: ROLE_MEMBER }
+    - { path: ^/emprunt, roles: [ ROLE_LIBRARIAN, ROLE_ADMIN ] }
+    - { path: ^/reservation, roles: [ ROLE_MEMBER, ROLE_ADMIN ] }
+
 
 # Configuration spécifique pour les tests
 when@test:

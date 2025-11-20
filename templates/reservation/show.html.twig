@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la réservation{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Détails de la réservation #{{ reservation.id }}</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Utilisateur</th>
+                <td>{{ reservation.user ? reservation.user.email : '' }}</td>
+            </tr>
+            <tr>
+                <th>Ouvrage</th>
+                <td>{{ reservation.ouvrage ? reservation.ouvrage.titre : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ reservation.dateCreation ? reservation.dateCreation|date('d/m/Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>
+                    {% if reservation.active %}
+                        <span class="badge bg-success">Active</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Inactive</span>
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_reservation_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-warning">Modifier</a>
+    </div>
+{% endblock %}

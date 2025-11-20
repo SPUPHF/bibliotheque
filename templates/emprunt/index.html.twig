@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des emprunts{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Liste des emprunts</h1>
+
+        <a href="{{ path('app_emprunt_new') }}" class="btn btn-success mb-3">Créer un nouvel emprunt</a>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Utilisateur</th>
+                <th>Exemplaire</th>
+                <th>Date emprunt</th>
+                <th>Date retour prévu</th>
+                <th>Date retour</th>
+                <th>Pénalité</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for emprunt in emprunts %}
+                <tr>
+                    <td>{{ emprunt.id }}</td>
+                    <td>{{ emprunt.user.email }}</td>
+                    <td>{{ emprunt.exemplaire.id }}</td>
+                    <td>{{ emprunt.dateEmprunt ? emprunt.dateEmprunt|date('d/m/Y') : '' }}</td>
+                    <td>{{ emprunt.dateRetourPrevu ? emprunt.dateRetourPrevu|date('d/m/Y') : '' }}</td>
+                    <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('d/m/Y') : 'En cours' }}</td>
+                    <td>{{ emprunt.penalite ? emprunt.penalite ~ ' €' : '-' }}</td>
+                    <td>
+                        <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucun emprunt trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
