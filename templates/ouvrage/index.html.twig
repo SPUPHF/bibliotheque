@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue des ouvrages{% endblock %}
+
+{% block body %}
+    <h1>Catalogue des ouvrages</h1>
+
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Editeur</th>
+            <th>Isbn</th>
+            <th>Categories</th>
+            <th>Tags</th>
+            <th>Langue</th>
+            <th>Annee</th>
+            <th>Resume</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ouvrage in ouvrages %}
+            <tr>
+                <td>{{ ouvrage.id }}</td>
+                <td>{{ ouvrage.titre }}</td>
+                <td>{{ ouvrage.auteur }}</td>
+                <td>{{ ouvrage.editeur }}</td>
+                <td>{{ ouvrage.isbn }}</td>
+                <td>{{ ouvrage.categories ? ouvrage.categories|join(', ') : '' }}</td>
+                <td>{{ ouvrage.tags ? ouvrage.tags|join(', ') : '' }}</td>
+                <td>{{ ouvrage.langue }}</td>
+                <td>{{ ouvrage.annee }}</td>
+                <td>{{ ouvrage.resume }}</td>
+                <td>
+                    <a href="{{ path('app_ouvrage_show', {'id': ouvrage.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                    <a href="{{ path('app_ouvrage_edit', {'id': ouvrage.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">Aucun ouvrage trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ouvrage_new') }}" class="btn btn-success mt-3">Créer un nouvel ouvrage</a>
+{% endblock %}

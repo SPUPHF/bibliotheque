@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use App\Repository\ExemplaireRepository;
+use App\Entity\Ouvrage;
 
 #[ORM\Entity(repositoryClass: ExemplaireRepository::class)]
 class Exemplaire
@@ -25,22 +24,9 @@ class Exemplaire
     #[ORM\Column]
     private bool $disponible = true;
 
-    // Relation vers Ouvrage
     #[ORM\ManyToOne(targetEntity: Ouvrage::class, inversedBy: "exemplaires")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ouvrage $ouvrage = null;
-
-    // Relation vers Exemplaire
-    #[ORM\ManyToOne(targetEntity: Exemplaire::class, inversedBy: "emprunts")]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Exemplaire $exemplaire = null;
-
-    public function __construct()
-    {
-        $this->emprunts = new ArrayCollection();
-    }
-
-    // ----- Getters et Setters -----
 
     public function getId(): ?int
     {
@@ -99,33 +85,6 @@ class Exemplaire
     public function setOuvrage(?Ouvrage $ouvrage): self
     {
         $this->ouvrage = $ouvrage;
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Emprunt>
-     */
-    public function getEmprunts(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmprunt(Emprunt $emprunt): self
-    {
-        if (!$this->emprunts->contains($emprunt)) {
-            $this->emprunts[] = $emprunt;
-            $emprunt->setExemplaire($this);
-        }
-        return $this;
-    }
-
-    public function removeEmprunt(Emprunt $emprunt): self
-    {
-        if ($this->emprunts->removeElement($emprunt)) {
-            if ($emprunt->getExemplaire() === $this) {
-                $emprunt->setExemplaire(null);
-            }
-        }
         return $this;
     }
 }

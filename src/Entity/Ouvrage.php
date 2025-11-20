@@ -17,9 +17,12 @@ class Ouvrage
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
-    // Le ou les auteurs
-    #[ORM\Column(type: "json", nullable: true)]
-    private array $auteurs = [];
+    // Auteur
+    #[ORM\Column(length: 255)]
+    private ?string $auteur = null;
+
+    public function getAuteur(): ?string { return $this->auteur; }
+    public function setAuteur(?string $auteur): self { $this->auteur = $auteur; return $this; }
 
     // L'editeur de l'ouvrage
     #[ORM\Column(length: 100)]
@@ -68,9 +71,6 @@ class Ouvrage
 
     public function getTitre(): ?string { return $this->titre; }
     public function setTitre(string $titre): self { $this->titre = $titre; return $this; }
-
-    public function getAuteurs(): array { return $this->auteurs; }
-    public function setAuteurs(array $auteurs): self { $this->auteurs = $auteurs; return $this; }
 
     public function getEditeur(): ?string { return $this->editeur; }
     public function setEditeur(?string $editeur): self { $this->editeur = $editeur; return $this; }

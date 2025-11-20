@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ouvrage{% endblock %}
+
+{% block body %}
+    <h1>Ouvrage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ouvrage.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ ouvrage.titre }}</td>
+            </tr>
+            <tr>
+                <th>Auteur</th>
+                <td>{{ ouvrage.auteur ? ouvrage.auteur|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Editeur</th>
+                <td>{{ ouvrage.editeur }}</td>
+            </tr>
+            <tr>
+                <th>Isbn</th>
+                <td>{{ ouvrage.isbn }}</td>
+            </tr>
+            <tr>
+                <th>Categories</th>
+                <td>{{ ouvrage.categories ? ouvrage.categories|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td>{{ ouvrage.tags ? ouvrage.tags|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Langue</th>
+                <td>{{ ouvrage.langue }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ ouvrage.annee }}</td>
+            </tr>
+            <tr>
+                <th>Resume</th>
+                <td>{{ ouvrage.resume }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ouvrage_index') }}">back to list</a>
+
+    <a href="{{ path('app_ouvrage_edit', {'id': ouvrage.id}) }}">edit</a>
+
+    {{ include('ouvrage/_delete_form.html.twig') }}
+{% endblock %}

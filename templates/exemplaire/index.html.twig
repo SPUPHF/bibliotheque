@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exemplaires{% endblock %}
+
+{% block body %}
+    <h1>Liste des exemplaires</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Cote</th>
+            <th>Etat</th>
+            <th>Emplacement</th>
+            <th>Disponible</th>
+            <th>Ouvrage</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for e in exemplaires %}
+            <tr>
+                <td>{{ e.id }}</td>
+                <td>{{ e.cote }}</td>
+                <td>{{ e.etat }}</td>
+                <td>{{ e.emplacement }}</td>
+                <td>{{ e.disponible ? 'Oui' : 'Non' }}</td>
+                <td>{{ e.ouvrage.titre }}</td>
+                <td>
+                    <a href="{{ path('app_exemplaire_edit', {'id': e.id}) }}">edit</a>
+                    <form method="post" action="{{ path('app_exemplaire_delete', {'id': e.id}) }}" style="display:inline-block">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ e.id) }}">
+                        <button class="btn btn-danger btn-sm">delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun exemplaire trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_exemplaire_new') }}">Créer un nouvel exemplaire</a>
+{% endblock %}
