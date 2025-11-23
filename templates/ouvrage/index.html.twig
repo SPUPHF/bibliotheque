@@ -34,10 +34,12 @@
                 <td>{{ ouvrage.langue }}</td>
                 <td>{{ ouvrage.annee }}</td>
                 <td>{{ ouvrage.resume }}</td>
-                <td>
-                    <a href="{{ path('app_ouvrage_show', {'id': ouvrage.id}) }}" class="btn btn-sm btn-info">Voir</a>
-                    <a href="{{ path('app_ouvrage_edit', {'id': ouvrage.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                </td>
+                {% if is_granted('ROLE_LIBRARIAN') or is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a href="{{ path('app_ouvrage_show', {'id': ouvrage.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_ouvrage_edit', {'id': ouvrage.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>

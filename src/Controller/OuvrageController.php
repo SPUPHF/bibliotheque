@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/ouvrage')]
 final class OuvrageController extends AbstractController
@@ -17,7 +18,6 @@ final class OuvrageController extends AbstractController
     #[Route('/', name: 'app_ouvrage_index', methods: ['GET'])]
     public function index(OuvrageRepository $ouvrageRepository): Response
     {
-        // Récupère tous les ouvrages
         $ouvrages = $ouvrageRepository->findAll();
 
         return $this->render('ouvrage/index.html.twig', [
@@ -26,6 +26,7 @@ final class OuvrageController extends AbstractController
     }
 
     #[Route('/new', name: 'app_ouvrage_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $ouvrage = new Ouvrage();
@@ -54,6 +55,7 @@ final class OuvrageController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_ouvrage_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function edit(Request $request, Ouvrage $ouvrage, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(OuvrageType::class, $ouvrage);
@@ -72,6 +74,7 @@ final class OuvrageController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_ouvrage_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function delete(Request $request, Ouvrage $ouvrage, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ouvrage->getId(), $request->request->get('_token'))) {

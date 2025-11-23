@@ -1,0 +1,27 @@
+<h1>Bienvenue {{ user.prenom }} {{ user.nom }}</h1>
+
+<h2>Menu :</h2>
+<ul>
+    {# Admin : accès au dashboard #}
+    {% if 'ROLE_ADMIN' in user.roles %}
+        <li><a href="{{ path('admin_dashboard') }}">Administration</a></li>
+    {% endif %}
+
+    {# Librarian : accès complet aux tables #}
+    {% if 'ROLE_LIBRARIAN' in user.roles %}
+        <li><a href="{{ path('app_emprunt_index') }}">Gérer les emprunts</a></li>
+        <li><a href="{{ path('app_exemplaire_index') }}">Gérer les exemplaires</a></li>
+        <li><a href="{{ path('app_reservation_index') }}">Gérer les réservations</a></li>
+        <li><a href="{{ path('app_ouvrage_index') }}">Gérer les ouvrages</a></li>
+    {% endif %}
+
+    {# Member : accès à ses emprunts, réservations et aux ouvrages disponibles #}
+    {% if 'ROLE_MEMBER' in user.roles %}
+        <li><a href="{{ path('app_emprunt_index') }}">Mes emprunts</a></li>
+        <li><a href="{{ path('app_reservation_index') }}">Mes réservations</a></li>
+        <li><a href="{{ path('app_ouvrage_index') }}">Ouvrages disponibles</a></li>
+    {% endif %}
+
+    {# Déconnexion pour tous #}
+    <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+</ul>

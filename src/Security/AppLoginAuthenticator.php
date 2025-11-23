@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,15 +43,10 @@ class AppLoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?RedirectResponse
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
+        // Effacer le target path pour forcer la redirection vers home
+        $this->removeTargetPath($request->getSession(), $firewallName);
 
-        // Exemple de redirection selon rôle
-        if (in_array('ROLE_ADMIN', $token->getRoleNames(), true)) {
-            return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
-        }
-
+        // Tous les utilisateurs sont redirigés vers la page d'accueil
         return new RedirectResponse($this->urlGenerator->generate('bibliotheque_home'));
     }
 

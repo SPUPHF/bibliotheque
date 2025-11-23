@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/reservation')]
 final class ReservationController extends AbstractController
@@ -17,11 +18,23 @@ final class ReservationController extends AbstractController
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
     public function index(ReservationRepository $reservationRepository): Response
     {
+        $user = $this->getUser();
+
+        if (in_array('ROLE_MEMBER', $user->getRoles())) {
+            // Les membres ne voient que leurs propres réservations
+            $reservations = $reservationRepository->findBy(['user' => $user]);
+        } else {
+            // Librarian/Admin voient toutes les réservations
+            $reservations = $reservationRepository->findAll();
+        }
+
         return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
+            'reservations' => $reservations,
         ]);
     }
 
+
+    #[IsGranted('ROLE_LIBRARIAN')]
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -52,6 +65,7 @@ final class ReservationController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_LIBRARIAN')]
     #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
     {
@@ -72,6 +86,7 @@ final class ReservationController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_LIBRARIAN')]
     #[Route('/{id}', name: 'app_reservation_delete', methods: ['POST'])]
     public function delete(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
     {

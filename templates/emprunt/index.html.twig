@@ -6,7 +6,10 @@
     <div class="container mt-4">
         <h1>Liste des emprunts</h1>
 
-        <a href="{{ path('app_emprunt_new') }}" class="btn btn-success mb-3">Créer un nouvel emprunt</a>
+        {# Afficher le bouton uniquement pour LIBRARIAN et ADMIN #}
+        {% if is_granted('ROLE_LIBRARIAN') %}
+            <a href="{{ path('app_emprunt_new') }}" class="btn btn-success mb-3">Créer un nouvel emprunt</a>
+        {% endif %}
 
         <table class="table table-striped">
             <thead>
@@ -32,8 +35,13 @@
                     <td>{{ emprunt.dateRetour ? emprunt.dateRetour|date('d/m/Y') : 'En cours' }}</td>
                     <td>{{ emprunt.penalite ? emprunt.penalite ~ ' €' : '-' }}</td>
                     <td>
+                        {# Bouton "Voir" accessible à tous #}
                         <a href="{{ path('app_emprunt_show', {'id': emprunt.id}) }}" class="btn btn-sm btn-info">Voir</a>
-                        <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+
+                        {# Bouton "Modifier" uniquement pour LIBRARIAN et ADMIN #}
+                        {% if is_granted('ROLE_LIBRARIAN') %}
+                            <a href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/exemplaire')]
 final class ExemplaireController extends AbstractController
@@ -25,6 +26,7 @@ final class ExemplaireController extends AbstractController
     }
 
     #[Route('/new', name: 'app_exemplaire_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $exemplaire = new Exemplaire();
@@ -44,6 +46,7 @@ final class ExemplaireController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_exemplaire_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function edit(Request $request, Exemplaire $exemplaire, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(ExemplaireType::class, $exemplaire);
@@ -61,6 +64,7 @@ final class ExemplaireController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_exemplaire_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function delete(Request $request, Exemplaire $exemplaire, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$exemplaire->getId(), $request->request->get('_token'))) {

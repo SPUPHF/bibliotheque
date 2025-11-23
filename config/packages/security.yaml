@@ -1,4 +1,9 @@
 security:
+  # Hiérarchie des rôles
+  role_hierarchy:
+    ROLE_LIBRARIAN: ROLE_MEMBER
+    ROLE_ADMIN: ROLE_LIBRARIAN
+
   # Hashing des mots de passe
   password_hashers:
     App\Entity\User: 'auto'
@@ -24,13 +29,13 @@ security:
         path: app_logout
         target: /login
       # activer la session
-      # form_login est géré par l’authenticator
+      # form_login est géré par l'authenticator
 
-  # Contrôle d’accès selon les rôles
+  # Contrôle d'accès selon les rôles
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
-    - { path: ^/emprunt, roles: [ ROLE_LIBRARIAN, ROLE_ADMIN ] }
-    - { path: ^/reservation, roles: [ ROLE_MEMBER, ROLE_ADMIN ] }
+    - { path: ^/emprunt, roles: ROLE_MEMBER }  # Simplifié grâce à la hiérarchie
+    - { path: ^/reservation, roles: ROLE_MEMBER }  # Simplifié grâce à la hiérarchie
 
 
 # Configuration spécifique pour les tests

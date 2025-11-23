@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\Emprunt;
@@ -11,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/emprunt')]
 final class EmpruntController extends AbstractController
@@ -18,12 +18,23 @@ final class EmpruntController extends AbstractController
     #[Route('/', name: 'app_emprunt_index', methods: ['GET'])]
     public function index(EmpruntRepository $empruntRepository): Response
     {
+        $user = $this->getUser();
+
+        if (in_array('ROLE_MEMBER', $user->getRoles())) {
+            // Les membres ne voient que leurs propres emprunts
+            $emprunts = $empruntRepository->findBy(['user' => $user]);
+        } else {
+            // Librarian/Admin voient tous les emprunts
+            $emprunts = $empruntRepository->findAll();
+        }
+
         return $this->render('emprunt/index.html.twig', [
-            'emprunts' => $empruntRepository->findAll(),
+            'emprunts' => $emprunts,
         ]);
     }
 
     #[Route('/new', name: 'app_emprunt_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $emprunt = new Emprunt();
@@ -43,6 +54,7 @@ final class EmpruntController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_emprunt_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function edit(Request $request, Emprunt $emprunt, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(EmpruntType::class, $emprunt);
@@ -60,6 +72,7 @@ final class EmpruntController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_emprunt_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
     public function delete(Request $request, Emprunt $emprunt, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete' . $emprunt->getId(), $request->request->get('_token'))) {
