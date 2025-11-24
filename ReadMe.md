@@ -1,12 +1,12 @@
 
-# 📚 Bibliothèque – Projet Symfony
+# Bibliothèque – Projet Symfony
 
 Ce projet est une application web de gestion de bibliothèque développée en **Symfony**.
 Il permet la gestion des ouvrages, exemplaires, emprunts, réservations et utilisateurs, avec une gestion des rôles (Admin / Librarian / Member).
 
 ---
 
-## 🚀 1. Prérequis
+## 1. Prérequis
 
 Assurez-vous d’avoir installé :
 
@@ -20,7 +20,7 @@ Assurez-vous d’avoir installé :
 
 ---
 
-## 🔧 2. Installation du projet
+## 2. Installation du projet
 
 ### **Cloner le dépôt**
 
@@ -37,7 +37,7 @@ composer install
 
 ---
 
-## 🗄️ 3. Configuration de la base de données
+## 3. Configuration de la base de données
 
 ### Modifier le fichier `.env` :
 
@@ -45,7 +45,7 @@ composer install
 DATABASE_URL="postgresql://postgres:password@127.0.0.1:5432/bibliotheque?serverVersion=15&charset=utf8"
 ```
 
-⚠️ Adapter :
+Adapter :
 
 * **postgres** = identifiant PostgreSQL
 * **password** = mot de passe PostgreSQL
@@ -71,7 +71,7 @@ php bin/console doctrine:fixtures:load
 
 ---
 
-## 👤 4. Comptes utilisateur par défaut
+## 4. Comptes utilisateur par défaut
 
 Fixtures installent notamment :
 
@@ -92,7 +92,7 @@ Fixtures installent notamment :
 
 ---
 
-## ▶️ 5. Lancer l’application
+## 5. Lancer l’application
 
 ```bash
 symfony server:start
@@ -104,7 +104,7 @@ Naviguer ensuite sur :
 
 ---
 
-## 📁 6. Structure rapide du projet
+## 6. Structure rapide du projet
 
 ```
 src/
@@ -117,12 +117,13 @@ public/               → Fichiers publics (CSS/JS)
 
 ---
 
-## 🔒 7. Gestion des rôles
+## 7. Gestion des rôles
 
 | Rôle          | Accès                                                            |
 | ------------- | ---------------------------------------------------------------- |
 | **Admin**     | Gestion complète + panneau admin                                 |
 | **Librarian** | Gérer ouvrages, exemplaires, emprunts, réservations              |
 | **Member**    | Voir uniquement *ses propres* emprunts / réservations + ouvrages |
+
 
 
