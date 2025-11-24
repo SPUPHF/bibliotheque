@@ -77,18 +77,18 @@ Fixtures installent notamment :
 
 ### **Admin**
 
-* **Email** : [admin@admin.com](mailto:admin@admin.com)
-* **Mot de passe** : admin
+* **Email** : [admin@example.com](mailto:admin@admin.com)
+* **Mot de passe** : admin123
 
 ### **Librarian**
 
-* **Email** : [librarian@test.com](mailto:librarian@test.com)
-* **Mot de passe** : test
+* **Email** : [biblio@example.com](mailto:librarian@test.com)
+* **Mot de passe** : motdepasse123
 
 ### **Member**
 
-* **Email** : [member@test.com](mailto:member@test.com)
-* **Mot de passe** : test
+* **Email** : [membre@example.com](mailto:member@test.com)
+* **Mot de passe** : motdepasse123
 
 ---
 
@@ -125,14 +125,4 @@ public/               → Fichiers publics (CSS/JS)
 | **Librarian** | Gérer ouvrages, exemplaires, emprunts, réservations              |
 | **Member**    | Voir uniquement *ses propres* emprunts / réservations + ouvrages |
 
----
 
-## ❗ 8. Problèmes courants
-
-### *"Access Denied"*
-
-→ Vérifier que l’utilisateur possède bien le bon rôle.
-
-### *"Unable to generate a URL for route…"*
-
-→ Vérifier que la route existe avec `php bin/console debug:router`.
