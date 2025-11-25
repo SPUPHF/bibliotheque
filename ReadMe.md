@@ -79,7 +79,7 @@ Fixtures installent notamment :
 
 * **Email** : [admin@example.com](mailto:admin@admin.com)
 * **Mot de passe** : admin123
-
+### ***AUCUN MIS A PART L'ADMIN NE FONCTIONNE, APRES PLUSIEURS HEURES A CHERCHER LE PROBLEME, JE NE SUIS PAS PARVENUE A LE RESOUDRE***
 ### **Librarian**
 
 * **Email** : [biblio@example.com](mailto:librarian@test.com)
@@ -124,6 +124,7 @@ public/               → Fichiers publics (CSS/JS)
 | **Admin**     | Gestion complète + panneau admin                                 |
 | **Librarian** | Gérer ouvrages, exemplaires, emprunts, réservations              |
 | **Member**    | Voir uniquement *ses propres* emprunts / réservations + ouvrages |
+
 
 
 
