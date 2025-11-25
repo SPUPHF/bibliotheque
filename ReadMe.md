@@ -146,7 +146,7 @@ CREATE DATABASE bibliotheque;
 
 Modifier .env ou .env.local :
 ```bash
-DATABASE_URL="pgsql://postgres:password@127.0.0.1:5432/bibliotheque"
+DATABASE_URL="pgsql://app:!ChangeMe!@127.0.0.1:62179/app"
 ```
 
 Remplacer postgres et password par vos identifiants.
@@ -166,4 +166,5 @@ php bin/console doctrine:schema:update --force
 ```bash
 php bin/console doctrine:fixtures:load
 ```
+
 
