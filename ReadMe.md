@@ -128,3 +128,42 @@ public/               → Fichiers publics (CSS/JS)
 
 
 
+
+
+
+
+# Configuration de la base de données et lancement du projet
+## 1. Créer la base de données
+
+Pour PostgreSQL :
+```bash
+psql -U postgres
+CREATE DATABASE bibliotheque;
+\q
+```
+
+## 2. Configurer Symfony
+
+Modifier .env ou .env.local :
+```bash
+DATABASE_URL="pgsql://postgres:password@127.0.0.1:5432/bibliotheque"
+```
+
+Remplacer postgres et password par vos identifiants.
+
+## 3. Créer les tables
+```bash
+composer install
+php bin/console doctrine:migrations:migrate
+```
+
+Option alternative sans migration :
+```bash
+php bin/console doctrine:schema:update --force
+```
+
+## 4. Charger les données de test
+```bash
+php bin/console doctrine:fixtures:load
+```
+
